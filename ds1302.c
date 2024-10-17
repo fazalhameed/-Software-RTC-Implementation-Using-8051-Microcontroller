@@ -5,11 +5,8 @@
  sbit CE = P3^5;
  sbit SCLK=P3^6;
  sbit IO =P3^4;
- 
 
- 
 int ArrayReadBurst[8];
-
 unsigned int a,b,c,d,Data,Data1,x,y;
 char array[32];
 char jj=0;
@@ -20,7 +17,6 @@ void Serial_ISR() interrupt 4
 	RI = 0;	
 	jj++;
 	}	
-
 }
 
 void UART_Init()
@@ -70,17 +66,16 @@ unsigned char ReadByte (unsigned char cmd1)
      Data >>=1;	
 	     if(IO==1)
 	       { 
-					 Data|=0x80;
+		 Data|=0x80;
 	       }
-				 else
-				 {   Data &=0x7F;}
+		 else
+		{   Data &=0x7F;}
 				 
-	 		 SCLK_Pulse();
+	 	 SCLK_Pulse();
   	 
 	}
 	 return Data;
 }
-
 void RTC_WriteByte (unsigned char cmd,unsigned char Value)
 {
   CE=1;
@@ -89,17 +84,16 @@ void RTC_WriteByte (unsigned char cmd,unsigned char Value)
 	CE=0;
 }
 
-
 void ReadBurst (void)
 {
-  
 	CE=1;
 	WriteByte(0xBF);
 	for(c=0;c<8;c++)
-	{    Data1=0x00;
-	    for(d=0;d<8;d++)
+	{   
+	 Data1=0x00;
+	 for(d=0;d<8;d++)
 	   {	 
-       Data1 >>=1;	
+         Data1 >>=1;	
 	     if(IO==1)
 	       { 
 					 Data1 |=0x80;
